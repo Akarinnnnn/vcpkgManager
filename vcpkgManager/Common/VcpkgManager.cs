@@ -15,6 +15,8 @@ namespace vcpkgManager.Common
         public bool setupGit()
         {
             GitPath = SoftwareChecker.getGitPath(); // 获得本地git路径
+
+            return SoftwareChecker.checkGit();
         }
 
         public bool gitclone(string targetPath)
@@ -23,7 +25,7 @@ namespace vcpkgManager.Common
             sb.AppendFormat("{0} clone --progress -v \"{1}\" \"{2}\"",
                 GitPath, GitVcpkgUrl, targetPath);
 
-            
+            return true;
         }
     }
 }

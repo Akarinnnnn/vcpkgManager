@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MVSC.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -102,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="local\loc_zhCN.xml" />
+    <Content Include="MVSC.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="config\" />
