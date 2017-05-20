@@ -63,6 +63,12 @@
     <Compile Include="SetupVcpkgFrm.Designer.cs">
       <DependentUpon>SetupVcpkgFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShowProcessFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowProcessFrm.Designer.cs">
+      <DependentUpon>ShowProcessFrm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.cs</DependentUpon>
     </EmbeddedResource>
@@ -77,6 +83,9 @@
     </Compile>
     <EmbeddedResource Include="SetupVcpkgFrm.resx">
       <DependentUpon>SetupVcpkgFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowProcessFrm.resx">
+      <DependentUpon>ShowProcessFrm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

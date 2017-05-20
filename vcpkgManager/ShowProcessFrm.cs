@@ -7,18 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using vcpkgManager.Common;
 
 namespace vcpkgManager
 {
-    public partial class MainFrm : Form
+    public partial class ShowProcessFrm : Form
     {
-        public MainFrm()
+        public ShowProcessFrm()
         {
             InitializeComponent();
-
-            SoftwareChecker.checkGit();
-            SoftwareChecker.checkTargetVcpkg("F:\\working\\vcpkg_v2");
         }
     }
 }
