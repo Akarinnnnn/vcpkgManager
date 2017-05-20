@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace vcpkgManager
 {
-    public partial class Form1 : Form
+    public partial class SetupVcpkgFrm : Form
     {
-        public Form1()
+        public SetupVcpkgFrm()
         {
             InitializeComponent();
         }

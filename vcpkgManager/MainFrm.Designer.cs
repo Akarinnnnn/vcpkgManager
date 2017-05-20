@@ -1,6 +1,6 @@
 ﻿namespace vcpkgManager
 {
-    partial class Form1
+    partial class MainFrm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MainFrm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(868, 512);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "MainFrm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "vcpkg管理工具集 1.0 by koangel";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
