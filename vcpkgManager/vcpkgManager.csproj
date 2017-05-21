@@ -36,6 +36,10 @@
     <ApplicationIcon>MVSC.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="INIFileParser, Version=2.4.0.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.2.4.0\lib\net20\INIFileParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConfigManager.cs" />
+    <Compile Include="Common\ShellCommand.cs" />
     <Compile Include="Common\SoftwareChecker.cs" />
     <Compile Include="Common\VcpkgManager.cs" />
     <Compile Include="MainFrm.cs">
@@ -90,6 +95,8 @@
     <EmbeddedResource Include="ShowProcessFrm.resx">
       <DependentUpon>ShowProcessFrm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="config\App.conf" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -107,9 +114,7 @@
     <Content Include="local\loc_zhCN.xml" />
     <Content Include="MVSC.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="config\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
