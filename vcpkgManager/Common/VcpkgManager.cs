@@ -113,19 +113,84 @@ namespace vcpkgManager.Common
             }
         }
 
-
-        public string getVcpkgList()
+        public void InstallToAll(bool useDialog = true, DataReceivedEventHandler recvHander = null)
         {
-            return ShellCommand.RunShellOnce(VcpkgPath, "list");
+            if (useDialog == false)
+            {
+                ShellCommand shellRun = new ShellCommand();
+
+                shellRun.RunShell(VcpkgPath, "integrate install", recvHander);
+            }
+            else
+            {
+                ShowProcessFrm.RunShell(VcpkgPath, "integrate install");
+            }
+        }
+
+        public void RemovePackage(string pkname)
+        {
+            ShowProcessFrm.RunShell(VcpkgPath, "remove " + pkname);
+        }
+
+        public void InstallPackage(string pkname)
+        {
+            ShowProcessFrm.RunShell(VcpkgPath, "install " + pkname);
+        }
+
+        public async Task<ArrayList> searchVcpkg(string searchKey)
+        {
+            ArrayList ctxt = new ArrayList();
+            var context = await runVcpkg("search " + searchKey);
+            var lines = context.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (lines.Length <= 2)
+                return ctxt;
+
+            foreach(var inLine in lines)
+            {
+                var varData = inLine.Split(new string[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                if (varData.Length >= 3)
+                    ctxt.Add(varData);
+            }
+
+            return ctxt;
+        }
+
+        public async Task<string> runVcpkg(string args)
+        {
+            return await Task.Run(
+              () =>
+              {
+                  return ShellCommand.RunShellOnce(VcpkgPath, args);
+              });
+        }
+
+        public async Task<string> getVcpkgList()
+        {
+            return await runVcpkg("list");
         }
 
 
-        public ArrayList getVcpkgArray()
+        public async Task<ArrayList> getVcpkgArray()
         {
             ArrayList ctxt = new ArrayList();
-            var context = getVcpkgList();
-            
+            var context = await getVcpkgList();
 
+            if (context.Contains("No packages are installed"))
+                return ctxt;
+
+            var lines = context.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            if(lines.Length > 0)
+            {
+                foreach(var inLine in lines)
+                {
+                    var varData = inLine.Split(new string[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (varData.Length >= 3)
+                        ctxt.Add(varData);
+                }
+            }
+
+            return ctxt;
         }
     }
 }

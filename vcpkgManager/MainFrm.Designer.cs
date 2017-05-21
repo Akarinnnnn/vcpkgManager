@@ -39,7 +39,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearchKey = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.searchlistBox = new System.Windows.Forms.ListBox();
             this.platformChkBox = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSetup = new System.Windows.Forms.Button();
@@ -47,6 +46,10 @@
             this.btnReflush = new System.Windows.Forms.Button();
             this.btnInstallAll = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.searchlistView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -104,13 +107,14 @@
             this.btnRemovePkg.TabIndex = 1;
             this.btnRemovePkg.Text = "移除选择包";
             this.btnRemovePkg.UseVisualStyleBackColor = true;
+            this.btnRemovePkg.Click += new System.EventHandler(this.btnRemovePkg_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.searchlistView);
             this.groupBox2.Controls.Add(this.btnSetup);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.platformChkBox);
-            this.groupBox2.Controls.Add(this.searchlistBox);
             this.groupBox2.Controls.Add(this.btnSearch);
             this.groupBox2.Controls.Add(this.txtSearchKey);
             this.groupBox2.Controls.Add(this.label1);
@@ -145,15 +149,7 @@
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "检索";
             this.btnSearch.UseVisualStyleBackColor = true;
-            // 
-            // searchlistBox
-            // 
-            this.searchlistBox.FormattingEnabled = true;
-            this.searchlistBox.ItemHeight = 12;
-            this.searchlistBox.Location = new System.Drawing.Point(6, 59);
-            this.searchlistBox.Name = "searchlistBox";
-            this.searchlistBox.Size = new System.Drawing.Size(435, 172);
-            this.searchlistBox.TabIndex = 3;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // platformChkBox
             // 
@@ -186,6 +182,7 @@
             this.btnSetup.TabIndex = 7;
             this.btnSetup.Text = "安装包";
             this.btnSetup.UseVisualStyleBackColor = true;
+            this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
             // 
             // groupBox3
             // 
@@ -206,6 +203,7 @@
             this.btnReflush.TabIndex = 2;
             this.btnReflush.Text = "刷新列表";
             this.btnReflush.UseVisualStyleBackColor = true;
+            this.btnReflush.Click += new System.EventHandler(this.btnReflush_Click);
             // 
             // btnInstallAll
             // 
@@ -215,6 +213,7 @@
             this.btnInstallAll.TabIndex = 0;
             this.btnInstallAll.Text = "同步库到VS";
             this.btnInstallAll.UseVisualStyleBackColor = true;
+            this.btnInstallAll.Click += new System.EventHandler(this.btnInstallAll_Click);
             // 
             // label3
             // 
@@ -224,6 +223,38 @@
             this.label3.Size = new System.Drawing.Size(263, 12);
             this.label3.TabIndex = 1;
             this.label3.Text = "本程序为vcpkg程序管理工具，代码编写:koangel\r\n";
+            // 
+            // searchlistView
+            // 
+            this.searchlistView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.searchlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.searchlistView.FullRowSelect = true;
+            this.searchlistView.GridLines = true;
+            this.searchlistView.Location = new System.Drawing.Point(6, 61);
+            this.searchlistView.MultiSelect = false;
+            this.searchlistView.Name = "searchlistView";
+            this.searchlistView.Size = new System.Drawing.Size(433, 175);
+            this.searchlistView.TabIndex = 3;
+            this.searchlistView.UseCompatibleStateImageBehavior = false;
+            this.searchlistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "包名称";
+            this.columnHeader1.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "版本号";
+            this.columnHeader2.Width = 100;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "包描述";
+            this.columnHeader3.Width = 200;
             // 
             // MainFrm
             // 
@@ -261,7 +292,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtSearchKey;
-        private System.Windows.Forms.ListBox searchlistBox;
         private System.Windows.Forms.CheckedListBox platformChkBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSetup;
@@ -269,6 +299,10 @@
         private System.Windows.Forms.Button btnReflush;
         private System.Windows.Forms.Button btnInstallAll;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView searchlistView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

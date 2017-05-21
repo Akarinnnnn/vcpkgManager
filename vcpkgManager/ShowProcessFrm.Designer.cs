@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShowProcessFrm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.runLogs = new System.Windows.Forms.TextBox();
             this.btnClosed = new System.Windows.Forms.Button();
+            this.timerVal = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +67,11 @@
             this.btnClosed.UseVisualStyleBackColor = true;
             this.btnClosed.Click += new System.EventHandler(this.btnClosed_Click);
             // 
+            // timerVal
+            // 
+            this.timerVal.Interval = 3000;
+            this.timerVal.Tick += new System.EventHandler(this.timerVal_Tick);
+            // 
             // ShowProcessFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -91,5 +98,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnClosed;
         private System.Windows.Forms.TextBox runLogs;
+        private System.Windows.Forms.Timer timerVal;
     }
 }

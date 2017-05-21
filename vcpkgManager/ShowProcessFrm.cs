@@ -52,7 +52,8 @@ namespace vcpkgManager
             {
                 runLogs.AppendText("运行结束，请手动关闭窗口。");
                 btnClosed.Text = "关闭窗口";
-                this.Close();
+
+                timerVal.Enabled = true;
             }
 
         }
@@ -118,6 +119,12 @@ namespace vcpkgManager
         private void ShowProcessFrm_FormClosed(object sender, FormClosedEventArgs e)
         {
             shellRun.Cancel();
+        }
+
+        private void timerVal_Tick(object sender, EventArgs e)
+        {
+            timerVal.Enabled = false;
+            this.Close();
         }
     }
 }
