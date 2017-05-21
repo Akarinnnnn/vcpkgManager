@@ -3,15 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Collections;
 
 namespace vcpkgManager.Common
 {
-    public class VcpkgManager
+    public class lVcpkgManager
     {
+        #region 单件部分
+        private static volatile lVcpkgManager _instance = null;
+        private static object objLock = new Object();
+        public static lVcpkgManager Ins
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (objLock)
+                    {
+                        _instance = new lVcpkgManager();
+                    }
+                }
+                return _instance;
+            }
+        }
+        #endregion
+
         // 远端路径
         private string GitVcpkgUrl = "https://github.com/Microsoft/vcpkg.git";
         private string GitPath = "C:\\Program Files\\Git\\cmd\\git.exe"; // 动态获得Git路径
 
+        // Vcpkg的路径
+        private string VcpkgPath = "";
+
+        /// <summary>
+        /// 安装Git路径 自动检测以及其他数据
+        /// </summary>
+        /// <param name="vcpkgDir">vcpkg路径</param>
+        /// <returns>安装是否成功</returns>
         public bool setupGit()
         {
             GitPath = SoftwareChecker.getGitPath(); // 获得本地git路径
@@ -19,13 +48,84 @@ namespace vcpkgManager.Common
             return SoftwareChecker.checkGit();
         }
 
-        public bool gitclone(string targetPath)
+        public bool setupVcpkg(string vcpkgDir)
+        {
+            if (SoftwareChecker.checkTargetVcpkg(vcpkgDir) == false)
+                return false;
+
+            VcpkgPath = vcpkgDir + "\\vcpkg.exe";
+            return true;
+        }
+
+        /// <summary>
+        /// 是否安装过git，否则提示他安装
+        /// </summary>
+        /// <returns>是否安装</returns>
+        public bool IsGitSetup()
+        {
+            return SoftwareChecker.checkGit();
+        }
+
+        /// <summary>
+        /// 根据git代码克隆对应的vcpkg路径
+        /// </summary>
+        /// <param name="targetPath">clone到哪里</param>
+        /// <param name="recvHander">重定向的控制台数据</param>
+        /// <returns>返回是否克隆成功</returns>
+        public bool gitCloneVcpkg(string targetPath,bool useDialog = true,DataReceivedEventHandler recvHander = null)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("{0} clone --progress -v \"{1}\" \"{2}\"",
-                GitPath, GitVcpkgUrl, targetPath);
+            sb.AppendFormat("clone --progress -v \"{0}\" \"{1}\"", GitVcpkgUrl, targetPath);
 
-            return true;
+            if(useDialog == false)
+            {
+                // Git安装源码
+                ShellCommand shellRun = new ShellCommand();
+
+                return shellRun.RunShell(GitPath, sb.ToString(), recvHander);
+            }else
+            {
+                ShowProcessFrm.RunShell(GitPath, sb.ToString());
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 安装setupVcpkg代码并编译
+        /// </summary>
+        /// <param name="recvHander">接收数据重定向</param>
+        /// <returns>是否安装成功</returns>
+        public bool buildVcpkg(string targetPath, bool useDialog = true, DataReceivedEventHandler recvHander = null)
+        {
+            if (useDialog == false)
+            {
+                // Git安装源码
+                ShellCommand shellRun = new ShellCommand();
+
+                return shellRun.RunShell(targetPath + "\\bootstrap-vcpkg.bat", "", recvHander);
+            }
+            else
+            {
+                ShowProcessFrm.RunShell(targetPath + "\\bootstrap-vcpkg.bat", "");
+
+                return true;
+            }
+        }
+
+
+        public string getVcpkgList()
+        {
+            return ShellCommand.RunShellOnce(VcpkgPath, "list");
+        }
+
+
+        public ArrayList getVcpkgArray()
+        {
+            ArrayList ctxt = new ArrayList();
+            var context = getVcpkgList();
+            
+
         }
     }
 }

@@ -21,31 +21,58 @@ namespace vcpkgManager.Common
         /// <param name="exec">运行程序</param>
         /// <param name="args">参数</param>
         /// <param name="recvHander">CALLBACK参数</param>
+        /// <param name="exited">结束时通知</param>
         /// <returns>是否运行成功</returns>
-        public bool RunShell(string exec, string args, DataReceivedEventHandler recvHander = null)
+        public bool RunShell(string exec, string args, DataReceivedEventHandler recvHander = null,EventHandler exited = null)
         {
            if(ownerProc == null)
             {
                 ownerProc = new Process();
                 ownerProc.StartInfo.CreateNoWindow = true; // 无窗口
                 ownerProc.StartInfo.UseShellExecute = false;
-                ownerProc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ownerProc.StartInfo.FileName = exec;
                 ownerProc.StartInfo.Arguments = args;
+                //ownerProc.StartInfo.WorkingDirectory = ".";
+
+                ownerProc.EnableRaisingEvents = true;
+                ownerProc.Exited += exited;
+               // ownerProc.StartInfo.RedirectStandardInput = true;
 
                 // 重定向输出
-                if(recvHander != null)
+                if (recvHander != null)
                 {
                     ownerProc.StartInfo.RedirectStandardOutput = true;
                     ownerProc.OutputDataReceived += recvHander; // 进行重定向
+
+                    ownerProc.StartInfo.RedirectStandardError = true;
+                    ownerProc.ErrorDataReceived += recvHander; // 进行重定向
                 }
 
-                return ownerProc.Start(); // 运行
+                bool isRet = ownerProc.Start(); // 运行
+                ownerProc.BeginOutputReadLine();
+                ownerProc.BeginErrorReadLine();
+
+                //ownerProc.StandardInput.WriteLine(exec + " " + args); // 执行语句
+
+                return isRet;
             }
 
             return false;
         }
 
+        /// <summary>
+        /// 是否已经执行完毕
+        /// </summary>
+        /// <returns>执行完毕否</returns>
+        public bool IsExited()
+        {
+            if(ownerProc != null)
+            {
+                return ownerProc.HasExited;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// 用于快速分析使用的一次运行数据，不做持续输出行为，会阻塞
@@ -58,16 +85,20 @@ namespace vcpkgManager.Common
             Process nowProc = new Process();
             nowProc.StartInfo.CreateNoWindow = true; // 无窗口
             nowProc.StartInfo.UseShellExecute = false;
-            nowProc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             nowProc.StartInfo.FileName = exec;
             nowProc.StartInfo.Arguments = args;
 
             // 重定向输出
             nowProc.StartInfo.RedirectStandardOutput = true;
+            nowProc.StartInfo.RedirectStandardError = true;
             nowProc.Start();
             nowProc.WaitForExit();
 
-            return nowProc.StandardOutput.ReadToEnd(); // 读取全部内容
+            string retScmd = nowProc.StandardOutput.ReadToEnd(); // 读取全部内容
+
+            nowProc.Close();
+
+            return retScmd;
         }
 
         /// <summary>
@@ -77,7 +108,10 @@ namespace vcpkgManager.Common
         {
             if (ownerProc != null)
             {
-                ownerProc.Kill(); // 关闭程序
+                if(ownerProc.HasExited == false)
+                    ownerProc.Kill(); // 关闭程序
+
+                ownerProc.Close();
                 ownerProc = null;
             }
         }

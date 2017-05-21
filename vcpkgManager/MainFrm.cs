@@ -16,9 +16,15 @@ namespace vcpkgManager
         public MainFrm()
         {
             InitializeComponent();
+        }
 
-            SoftwareChecker.checkGit();
-            SoftwareChecker.checkTargetVcpkg("F:\\working\\vcpkg_v2");
+        private void MainFrm_Load(object sender, EventArgs e)
+        {
+            SetupVcpkgFrm frm = new SetupVcpkgFrm();
+            if (frm.ShowDialog() != DialogResult.OK)
+            {
+                this.Close();
+            }
         }
     }
 }

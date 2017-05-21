@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShowProcessFrm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnClosed = new System.Windows.Forms.Button();
             this.runLogs = new System.Windows.Forms.TextBox();
+            this.btnClosed = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +45,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "运行日志";
             // 
+            // runLogs
+            // 
+            this.runLogs.Location = new System.Drawing.Point(6, 20);
+            this.runLogs.Multiline = true;
+            this.runLogs.Name = "runLogs";
+            this.runLogs.ReadOnly = true;
+            this.runLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.runLogs.Size = new System.Drawing.Size(541, 344);
+            this.runLogs.TabIndex = 0;
+            // 
             // btnClosed
             // 
             this.btnClosed.Location = new System.Drawing.Point(393, 389);
@@ -53,15 +63,7 @@
             this.btnClosed.TabIndex = 1;
             this.btnClosed.Text = "取消运行";
             this.btnClosed.UseVisualStyleBackColor = true;
-            // 
-            // runLogs
-            // 
-            this.runLogs.Location = new System.Drawing.Point(6, 20);
-            this.runLogs.Multiline = true;
-            this.runLogs.Name = "runLogs";
-            this.runLogs.ReadOnly = true;
-            this.runLogs.Size = new System.Drawing.Size(541, 344);
-            this.runLogs.TabIndex = 0;
+            this.btnClosed.Click += new System.EventHandler(this.btnClosed_Click);
             // 
             // ShowProcessFrm
             // 
@@ -75,7 +77,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ShowProcessFrm";
-            this.Text = "程序运行中...";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "指令执行中，请稍后...";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ShowProcessFrm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

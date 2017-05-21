@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetupVcpkgFrm));
             this.PathGroupID = new System.Windows.Forms.GroupBox();
+            this.TipLabel = new System.Windows.Forms.Label();
+            this.btnSetup = new System.Windows.Forms.Button();
+            this.btnSelPath = new System.Windows.Forms.Button();
+            this.txtPathVcpkg = new System.Windows.Forms.TextBox();
             this.PathLabel = new System.Windows.Forms.Label();
             this.vcpkgFBDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.txtPathVcpkg = new System.Windows.Forms.TextBox();
-            this.btnSelPath = new System.Windows.Forms.Button();
-            this.btnSetup = new System.Windows.Forms.Button();
-            this.TipLabel = new System.Windows.Forms.Label();
             this.PathGroupID.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,30 +53,15 @@
             this.PathGroupID.TabStop = false;
             this.PathGroupID.Text = "Vcpkg选择目录";
             // 
-            // PathLabel
+            // TipLabel
             // 
-            this.PathLabel.AutoSize = true;
-            this.PathLabel.Location = new System.Drawing.Point(6, 30);
-            this.PathLabel.Name = "PathLabel";
-            this.PathLabel.Size = new System.Drawing.Size(71, 12);
-            this.PathLabel.TabIndex = 0;
-            this.PathLabel.Text = "Vcpkg Path:";
-            // 
-            // txtPathVcpkg
-            // 
-            this.txtPathVcpkg.Location = new System.Drawing.Point(83, 26);
-            this.txtPathVcpkg.Name = "txtPathVcpkg";
-            this.txtPathVcpkg.Size = new System.Drawing.Size(325, 21);
-            this.txtPathVcpkg.TabIndex = 1;
-            // 
-            // btnSelPath
-            // 
-            this.btnSelPath.Location = new System.Drawing.Point(414, 25);
-            this.btnSelPath.Name = "btnSelPath";
-            this.btnSelPath.Size = new System.Drawing.Size(75, 23);
-            this.btnSelPath.TabIndex = 2;
-            this.btnSelPath.Text = "...";
-            this.btnSelPath.UseVisualStyleBackColor = true;
+            this.TipLabel.AutoSize = true;
+            this.TipLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TipLabel.Location = new System.Drawing.Point(6, 98);
+            this.TipLabel.Name = "TipLabel";
+            this.TipLabel.Size = new System.Drawing.Size(419, 12);
+            this.TipLabel.TabIndex = 4;
+            this.TipLabel.Text = "提示:如果该目录下不存在Vcpkg会自动使用git安装Vcpkg,结尾不能带有斜杠。";
             // 
             // btnSetup
             // 
@@ -86,16 +71,37 @@
             this.btnSetup.TabIndex = 3;
             this.btnSetup.Text = "安装";
             this.btnSetup.UseVisualStyleBackColor = true;
+            this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
             // 
-            // TipLabel
+            // btnSelPath
             // 
-            this.TipLabel.AutoSize = true;
-            this.TipLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TipLabel.Location = new System.Drawing.Point(6, 98);
-            this.TipLabel.Name = "TipLabel";
-            this.TipLabel.Size = new System.Drawing.Size(317, 12);
-            this.TipLabel.TabIndex = 4;
-            this.TipLabel.Text = "提示:如果该目录下不存在Vcpkg会自动使用git安装Vcpkg。";
+            this.btnSelPath.Location = new System.Drawing.Point(414, 25);
+            this.btnSelPath.Name = "btnSelPath";
+            this.btnSelPath.Size = new System.Drawing.Size(75, 23);
+            this.btnSelPath.TabIndex = 2;
+            this.btnSelPath.Text = "...";
+            this.btnSelPath.UseVisualStyleBackColor = true;
+            this.btnSelPath.Click += new System.EventHandler(this.btnSelPath_Click);
+            // 
+            // txtPathVcpkg
+            // 
+            this.txtPathVcpkg.Location = new System.Drawing.Point(83, 26);
+            this.txtPathVcpkg.Name = "txtPathVcpkg";
+            this.txtPathVcpkg.Size = new System.Drawing.Size(325, 21);
+            this.txtPathVcpkg.TabIndex = 1;
+            // 
+            // PathLabel
+            // 
+            this.PathLabel.AutoSize = true;
+            this.PathLabel.Location = new System.Drawing.Point(6, 30);
+            this.PathLabel.Name = "PathLabel";
+            this.PathLabel.Size = new System.Drawing.Size(71, 12);
+            this.PathLabel.TabIndex = 0;
+            this.PathLabel.Text = "Vcpkg Path:";
+            // 
+            // vcpkgFBDialog
+            // 
+            this.vcpkgFBDialog.ShowNewFolderButton = false;
             // 
             // SetupVcpkgFrm
             // 
@@ -109,6 +115,7 @@
             this.Name = "SetupVcpkgFrm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "安装Vcpkg";
+            this.Load += new System.EventHandler(this.SetupVcpkgFrm_Load);
             this.PathGroupID.ResumeLayout(false);
             this.PathGroupID.PerformLayout();
             this.ResumeLayout(false);
